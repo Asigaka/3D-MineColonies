@@ -42,6 +42,14 @@ public class PlayerInteractive : MonoBehaviour
             }
         }
 
+        if (interactives.Count > 1)
+        {
+            interactives.Sort(delegate (AInteractive t1, AInteractive t2)
+            {
+                return Vector3.Distance(t1.transform.position, transform.position).CompareTo(Vector3.Distance(t2.transform.position, transform.position));
+            });
+        }
+        
         if (interactives.Count > 0)
         {
             CurrentInteractive = interactives[0];
