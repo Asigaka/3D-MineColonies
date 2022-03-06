@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceInfo : MonoBehaviour
+[CreateAssetMenu(menuName ="Content/Resource")]
+public class ResourceInfo : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private string resourceName;
+    [SerializeField] private int miningProgress;
+    [SerializeField] private List<ItemForSpawn> itemsBeforeMining;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string ResourceName { get => resourceName; }
+    public int MiningProgress { get => miningProgress; }
+    public List<ItemForSpawn> ItemsBeforeMining { get => itemsBeforeMining; }
 }

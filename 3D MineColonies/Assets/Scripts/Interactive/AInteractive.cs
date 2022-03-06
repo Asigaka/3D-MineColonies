@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Outline))]
-public class AInteractive : MonoBehaviour
+public abstract class AInteractive : MonoBehaviour
 {
+    private UnityEvent onAfterStart;
+
     private Outline outline;
 
     private void Start()
@@ -16,6 +18,12 @@ public class AInteractive : MonoBehaviour
         outline.OutlineColor = Color.black;
 
         HideInteractive();
+        Initialize();
+    }
+
+    public virtual void Initialize()
+    {
+
     }
 
     public void ShowInteractive()
