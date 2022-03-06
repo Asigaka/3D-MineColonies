@@ -9,6 +9,14 @@ public class Resource : AInteractive
     [SerializeField] private Container container;
     private int currentProgress;
 
+    public override void ShowInteractive()
+    {
+        if (!container.IsEmpty())
+        {
+            base.ShowInteractive();
+        }
+    }
+
     public override void Interactive()
     {
         base.Interactive();
@@ -24,6 +32,6 @@ public class Resource : AInteractive
 
     private void OpenResourceContainer()
     {
-        
+        container.TakeAllItemsToInventory();
     }
 }

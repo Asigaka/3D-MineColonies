@@ -9,11 +9,11 @@ public class ItemEntity
     [SerializeField] private int count;
 
     public ItemInfo ItemInfo { get => itemInfo; }
-    public int Count { get => count; }
+    public int Count { get => count; set => count = value; }
 
     public ItemEntity(ItemInfo itemInfo, int count)
     {
         this.itemInfo = itemInfo;
-        this.count = count;
+        this.Count = count;
     }
 }
