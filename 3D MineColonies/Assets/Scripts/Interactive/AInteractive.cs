@@ -6,9 +6,6 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Outline))]
 public class AInteractive : MonoBehaviour
 {
-    [HideInInspector] public UnityEvent ShowInteractive;
-    [HideInInspector] public UnityEvent HideInteractive;
-
     private Outline outline;
 
     private void Start()
@@ -17,18 +14,17 @@ public class AInteractive : MonoBehaviour
         outline.OutlineWidth = 7;
         outline.OutlineMode = Outline.Mode.OutlineVisible;
         outline.OutlineColor = Color.black;
-        ShowInteractive.AddListener(TurnOnInteractive);
-        HideInteractive.AddListener(TurnOffInteractive);
-        HideInteractive.Invoke();
+
+        HideInteractive();
     }
 
-    private void TurnOnInteractive()
+    public void ShowInteractive()
     {
         outline.enabled = true;
         UIPlayerInteractives.Instance.InteractiveBtnActive(true);
     }
 
-    private void TurnOffInteractive()
+    public void HideInteractive()
     {
         outline.enabled = false;
         UIPlayerInteractives.Instance.InteractiveBtnActive(false);
@@ -36,6 +32,6 @@ public class AInteractive : MonoBehaviour
 
     public virtual void Interactive()
     {
-        Debug.Log(gameObject.name + " interactive");
+
     }
 }

@@ -28,7 +28,7 @@ public class UIPlayerInteractives : MonoBehaviour
 
     public void OnInteractiveClick()
     {
-        playerInteractive.CurrentInteractive.Interactive();
+        playerInteractive.OnInteractiveClick();
     }
 
     public void InteractiveBtnActive(bool state)

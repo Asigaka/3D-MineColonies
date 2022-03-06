@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -23,8 +24,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        //moveJoys = UIManager.Instance.MoveJoy;
-        //lookJoys = UIManager.Instance.LookJoy;
         character = GetComponent<CharacterController>();
     }
 
@@ -32,10 +31,11 @@ public class PlayerMovement : MonoBehaviour
     {
         GroundCheck();
         PlayerGravity();
+
         Move();
     }
 
-    public void Move()
+    private void Move()
     {
 #if UNITY_EDITOR
         float moveHor = Input.GetAxisRaw("Horizontal");
@@ -81,23 +81,6 @@ public class PlayerMovement : MonoBehaviour
         character.Move(velocity * Time.deltaTime);
     }
 
-    /*public void Look()
-    {
-        float lookHor = lookJoys.Horizontal;
-        float lookVer = lookJoys.Vertical;
-
-        lookDir = new Vector3(lookHor, 0, lookVer).normalized;
-
-        if (lookDir.magnitude >= 0.1f)
-        {
-            float targetAngle;
-            targetAngle = Mathf.Atan2(lookDir.x, lookDir.z) * Mathf.Rad2Deg;
-
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0.1f);
-            transform.rotation = Quaternion.Euler(0, angle, 0);
-        }
-    }*/
-
     public bool isRunning()
     {
         return moveDir.magnitude >= 0.1f;
@@ -107,9 +90,4 @@ public class PlayerMovement : MonoBehaviour
     {
         return lookDir.magnitude >= 0.1f;
     }
-
-    /*public void SetHeroInfo(HeroInfo heroInfo)
-    {
-        this.heroInfo = heroInfo;
-    }*/
 }

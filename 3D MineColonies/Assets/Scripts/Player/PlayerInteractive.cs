@@ -2,13 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement))]
 public class PlayerInteractive : MonoBehaviour
 {
     [SerializeField] private List<AInteractive> interactives;
     [SerializeField] private float interactiveRadius = 4;
     [SerializeField] private AInteractive currentInteractive;
 
+    private PlayerMovement movement;
+
     public AInteractive CurrentInteractive { get => currentInteractive; private set => currentInteractive = value; }
+
+    private void Start()
+    {
+        movement = GetComponent<PlayerMovement>();
+    }
 
     private void Update()
     {
@@ -18,7 +26,7 @@ public class PlayerInteractive : MonoBehaviour
     private void InteractiveCheck()
     {
         if (CurrentInteractive != null)
-            CurrentInteractive.HideInteractive.Invoke();
+            CurrentInteractive.HideInteractive();
 
         CurrentInteractive = null;
         interactives.Clear();
@@ -37,8 +45,13 @@ public class PlayerInteractive : MonoBehaviour
         if (interactives.Count > 0)
         {
             CurrentInteractive = interactives[0];
-            CurrentInteractive.ShowInteractive.Invoke();
+            CurrentInteractive.ShowInteractive();
         }
+    }
+
+    public void OnInteractiveClick()
+    {
+        CurrentInteractive.Interactive();
     }
 
     private void OnDrawGizmos()
