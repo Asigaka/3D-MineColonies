@@ -60,7 +60,10 @@ public class PlayerInteractive : MonoBehaviour
     public void OnInteractiveClick()
     {
         if (CurrentInteractive != null)
+        {
             CurrentInteractive.Interactive();
+
+        }
     }
 
     private void OnDrawGizmos()
