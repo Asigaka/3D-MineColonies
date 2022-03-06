@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 lookDir;
     private Vector3 moveDir;
     private Vector3 velocity;
+    private bool isMiningResoures;
+
+    public bool IsMiningResoures { get => isMiningResoures; set => isMiningResoures = value; }
 
     private void Start()
     {
@@ -32,7 +35,10 @@ public class PlayerMovement : MonoBehaviour
         GroundCheck();
         PlayerGravity();
 
-        Move();
+        if (!IsMiningResoures)
+        {
+            Move();
+        }
     }
 
     private void Move()

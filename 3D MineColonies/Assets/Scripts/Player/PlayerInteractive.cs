@@ -59,7 +59,8 @@ public class PlayerInteractive : MonoBehaviour
 
     public void OnInteractiveClick()
     {
-        CurrentInteractive.Interactive();
+        if (CurrentInteractive != null)
+            CurrentInteractive.Interactive();
     }
 
     private void OnDrawGizmos()
