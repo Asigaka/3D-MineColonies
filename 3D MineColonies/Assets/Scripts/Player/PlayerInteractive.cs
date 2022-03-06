@@ -62,7 +62,7 @@ public class PlayerInteractive : MonoBehaviour
         if (CurrentInteractive != null)
         {
             CurrentInteractive.Interactive();
-
+            movement.RotateToTarget(CurrentInteractive.transform);
         }
     }
 

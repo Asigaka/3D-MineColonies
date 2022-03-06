@@ -71,6 +71,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void RotateToTarget(Transform target)
+    {
+        transform.LookAt(target);
+    }
+
     private bool GroundCheck()
     {
         return Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
