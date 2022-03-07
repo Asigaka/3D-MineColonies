@@ -6,15 +6,30 @@ public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private List<ItemEntity> itemsInInventory;
 
+    private UIInventoryManager uiInventory;
+
+    public List<ItemEntity> ItemsInInventory { get => itemsInInventory; private set => itemsInInventory = value; }
+
+    private void Start()
+    {
+        uiInventory = UIInventoryManager.Instance;
+        uiInventory.SpawnInventory();
+    }
+
     public void AddItem(ItemEntity item)
     {
-        if (itemsInInventory.Contains(GetItemByInfo(item.ItemInfo)))
+        ItemEntity newItem = item;
+
+        if (ItemsInInventory.Contains(GetItemByInfo(newItem.ItemInfo)))
         {
-            GetItemByInfo(item.ItemInfo).Count += item.Count;
+            ItemEntity itemInInventory = GetItemByInfo(newItem.ItemInfo);
+            itemInInventory.Count += newItem.Count;
+            itemInInventory.ItemSlot.UpdateSlot();
         }
         else
         {
-            itemsInInventory.Add(item);
+            ItemsInInventory.Add(newItem);
+            newItem.SetSlot(uiInventory.GetNearestFreeSlot());
         }
     }
 
@@ -30,22 +45,22 @@ public class PlayerInventory : MonoBehaviour
     {
         ItemEntity removedItem = GetItemFromList(item);
         if (amount == -1)
-            itemsInInventory.Remove(removedItem);
+            ItemsInInventory.Remove(removedItem);
 
             removedItem.Count -= amount;
 
         if (removedItem.Count <= 0)
-            itemsInInventory.Remove(removedItem);
+            ItemsInInventory.Remove(removedItem);
     }
 
     public ItemEntity GetItemFromList(ItemEntity item)
     {
-        return itemsInInventory[itemsInInventory.IndexOf(item)];
+        return ItemsInInventory[ItemsInInventory.IndexOf(item)];
     }
 
     public ItemEntity GetItemByInfo(ItemInfo itemInfo)
     {
-        foreach (ItemEntity item in itemsInInventory)
+        foreach (ItemEntity item in ItemsInInventory)
         {
             if (item.ItemInfo == itemInfo)
             {

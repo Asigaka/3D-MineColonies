@@ -29,13 +29,13 @@ public abstract class AInteractive : MonoBehaviour
     public virtual void ShowInteractive()
     {
         outline.enabled = true;
-        UIPlayerInteractives.Instance.InteractiveBtnActive(true);
+        UIHUDManager.Instance.InteractiveBtnActive(true);
     }
 
     public virtual void HideInteractive()
     {
         outline.enabled = false;
-        UIPlayerInteractives.Instance.InteractiveBtnActive(false);
+        UIHUDManager.Instance.InteractiveBtnActive(false);
     }
 
     public virtual void Interactive()
