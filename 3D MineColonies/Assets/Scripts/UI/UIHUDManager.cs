@@ -7,6 +7,7 @@ public class UIHUDManager : MonoBehaviour
 {
     [SerializeField] private Button inventoryBtn;
     [SerializeField] private Button interactiveBtn;
+    [SerializeField] private Button buildModeBtn;
 
     private PlayerInteractive playerInteractive;
 
@@ -24,18 +25,25 @@ public class UIHUDManager : MonoBehaviour
     {
         interactiveBtn.onClick.AddListener(OnInteractiveClick);
         inventoryBtn.onClick.AddListener(OnInventoryClick);
+        buildModeBtn.onClick.AddListener(OnBuildModeClick);
         playerInteractive = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteractive>();
         InteractiveBtnActive(false);
     }
 
-    public void OnInteractiveClick()
+    private void OnInteractiveClick()
     {
         playerInteractive.OnInteractiveClick();
     }
 
-    public void OnInventoryClick()
+    private void OnInventoryClick()
     {
         UIManager.Instance.Toogle(UIType.Inventory);
+    }
+
+    private void OnBuildModeClick()
+    {
+        UIManager.Instance.Toogle(UIType.Build);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCamera>().SwitchCameraMode();
     }
 
     public void InteractiveBtnActive(bool state)

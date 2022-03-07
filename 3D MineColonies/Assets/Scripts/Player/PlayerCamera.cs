@@ -5,9 +5,10 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     [SerializeField] private Camera playerCamera;
-    [SerializeField] private Camera rtsCamera;
-    [SerializeField] private Vector3 offset;
-    [SerializeField] private Vector3 rotation;
+    [SerializeField] private Vector3 actionOffset;
+    [SerializeField] private Vector3 rtsOffset;
+    [SerializeField] private Vector3 actionRotation;
+    [SerializeField] private Vector3 rtsRotation;
     [SerializeField] private float smoothFactor = 0.5f;
     [SerializeField] private Plane plane;
     [SerializeField] private bool inRTSMode;
@@ -18,24 +19,38 @@ public class PlayerCamera : MonoBehaviour
     private void Start()
     {
         playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        //rtsCamera = MatchTeams.Instance.PlayerTeam.GameField.RtsCamera;
-        playerCamera.transform.rotation = Quaternion.Euler(rotation);
+        playerCamera.transform.rotation = Quaternion.Euler(actionRotation);
     }
 
     private void LateUpdate()
     {
-        CharacterCamera();
+        if (inRTSMode)
+        {
+            RTSCamera();
+        }
+        else
+        {
+            CharacterCamera();
+        }
 
-        //if (Input.GetKeyDown(KeyCode.G))
-        // SwitchCameraMode();
+        if (Input.GetKeyDown(KeyCode.G))
+            SwitchCameraMode();
     }
 
     public void SwitchCameraMode()
     {
         inRTSMode = !inRTSMode;
 
-        playerCamera.gameObject.SetActive(!inRTSMode);
-        rtsCamera.gameObject.SetActive(inRTSMode);
+        if (inRTSMode)
+        {
+            playerCamera.transform.position = rtsOffset;
+            playerCamera.transform.rotation = Quaternion.Euler(rtsRotation);
+        }
+        else
+        {
+            playerCamera.transform.position = actionOffset;
+            playerCamera.transform.rotation = Quaternion.Euler(actionRotation);
+        }
     }
 
     private void RTSCamera()
@@ -54,7 +69,7 @@ public class PlayerCamera : MonoBehaviour
 
             if (Input.GetTouch(0).phase == TouchPhase.Moved)
             {
-                rtsCamera.transform.Translate(delta1, Space.World);
+                playerCamera.transform.Translate(delta1, Space.World);
             }
         }
 
@@ -69,11 +84,11 @@ public class PlayerCamera : MonoBehaviour
             if (zoom == 0 || zoom > 10)
                 return;
 
-            rtsCamera.transform.position = Vector3.LerpUnclamped(pos1, rtsCamera.transform.position, 1 / zoom);
+            playerCamera.transform.position = Vector3.LerpUnclamped(pos1, playerCamera.transform.position, 1 / zoom);
 
             if (rotate && pos2b != pos2)
             {
-                rtsCamera.transform.RotateAround(pos1, plane.normal,
+                playerCamera.transform.RotateAround(pos1, plane.normal,
                    Vector3.SignedAngle(pos2 - pos1, pos2b - pos1b, plane.normal));
             }
         }
@@ -84,8 +99,8 @@ public class PlayerCamera : MonoBehaviour
         if (touch.phase != TouchPhase.Moved)
             return Vector3.zero;
 
-        Ray rayBefore = rtsCamera.ScreenPointToRay(touch.position - touch.deltaPosition);
-        Ray rayNow = rtsCamera.ScreenPointToRay(touch.position);
+        Ray rayBefore = playerCamera.ScreenPointToRay(touch.position - touch.deltaPosition);
+        Ray rayNow = playerCamera.ScreenPointToRay(touch.position);
         if (plane.Raycast(rayBefore, out float enterBefore) && plane.Raycast(rayNow, out float enterNow))
             return rayBefore.GetPoint(enterBefore) - rayNow.GetPoint(enterNow);
 
@@ -94,7 +109,7 @@ public class PlayerCamera : MonoBehaviour
 
     private Vector3 PlanePosition(Vector3 screenPos)
     {
-        Ray ray = rtsCamera.ScreenPointToRay(screenPos);
+        Ray ray = playerCamera.ScreenPointToRay(screenPos);
         if (plane.Raycast(ray, out float enter))
         {
             return ray.GetPoint(enter);
@@ -105,7 +120,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void CharacterCamera()
     {
-        Vector3 targetPos = transform.position + offset;
+        Vector3 targetPos = transform.position + actionOffset;
         Vector3 smoothPos = Vector3.Lerp(playerCamera.transform.position, targetPos, smoothFactor * Time.fixedDeltaTime);
         playerCamera.transform.position = targetPos;
     }

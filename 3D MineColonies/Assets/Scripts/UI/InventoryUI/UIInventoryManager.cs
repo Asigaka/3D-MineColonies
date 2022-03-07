@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class UIInventoryManager : MonoBehaviour
 {
     [SerializeField] private Transform bagContent;
-    [SerializeField] private Transform barContent;
     [SerializeField] private int maxSlotsInBag;
     [SerializeField] private GameObject itemSlot;
     [SerializeField] private List<ItemSlot> slots;
