@@ -7,6 +7,11 @@ public class ProgressBar : MonoBehaviour
 {
     [SerializeField] private Slider barSlider;
 
+    private void Start()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
     private void Update()
     {
         transform.LookAt(transform.position + Camera.main.transform.forward);
