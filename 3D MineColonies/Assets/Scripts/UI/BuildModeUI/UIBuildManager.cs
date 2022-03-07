@@ -25,6 +25,6 @@ public class UIBuildManager : MonoBehaviour
     private void OnBackBtnClick()
     {
         UIManager.Instance.Toogle(UIType.HUD);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCamera>().SwitchCameraMode();
+        GameStateController.Instance.ChangeState(GameState.ActionMode);
     }
 }

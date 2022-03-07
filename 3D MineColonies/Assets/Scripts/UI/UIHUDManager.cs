@@ -43,7 +43,7 @@ public class UIHUDManager : MonoBehaviour
     private void OnBuildModeClick()
     {
         UIManager.Instance.Toogle(UIType.Build);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCamera>().SwitchCameraMode();
+        GameStateController.Instance.ChangeState(GameState.BuildMode);
     }
 
     public void InteractiveBtnActive(bool state)

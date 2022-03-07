@@ -29,6 +29,13 @@ public class UIManager : MonoBehaviour
         switch (type)
         {
             case UIType.HUD:
+                GameStateController.Instance.ChangeState(GameState.ActionMode);
+                break;
+            case UIType.Inventory:
+                GameStateController.Instance.ChangeState(GameState.ActionMode);
+                break;
+            case UIType.Build:
+                GameStateController.Instance.ChangeState(GameState.BuildMode);
                 break;
         }
 

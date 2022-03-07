@@ -13,13 +13,13 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private Plane plane;
     [SerializeField] private bool inRTSMode;
     [SerializeField] private bool rotate;
+    [SerializeField] private LayerMask groundLayer;
 
     private Vector3 velocity;
 
-    private void Start()
+    private void Awake()
     {
-        playerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        playerCamera.transform.rotation = Quaternion.Euler(actionRotation);
+        playerCamera = Camera.main;
     }
 
     private void LateUpdate()
@@ -32,24 +32,37 @@ public class PlayerCamera : MonoBehaviour
         {
             CharacterCamera();
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.G))
-            SwitchCameraMode();
+    public Vector3 GetTouchPosition()
+    {
+        if (Input.touchCount >= 1)
+        {
+            Ray ray = playerCamera.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 50000, groundLayer))
+            {
+                return hit.point;
+            }
+        }
+
+        return Vector3.zero;
     }
 
     public void SwitchCameraMode()
     {
-        inRTSMode = !inRTSMode;
-
-        if (inRTSMode)
+        if (GameStateController.Instance.CurrentState == GameState.BuildMode)
         {
             playerCamera.transform.position = rtsOffset;
             playerCamera.transform.rotation = Quaternion.Euler(rtsRotation);
+            inRTSMode = true;
         }
-        else
+        else if (GameStateController.Instance.CurrentState == GameState.ActionMode)
         {
             playerCamera.transform.position = actionOffset;
             playerCamera.transform.rotation = Quaternion.Euler(actionRotation);
+            inRTSMode = false;
         }
     }
 
