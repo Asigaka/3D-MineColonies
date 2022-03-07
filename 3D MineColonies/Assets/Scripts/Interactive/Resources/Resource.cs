@@ -6,6 +6,7 @@ public class Resource : AInteractive
 {
     [SerializeField] private ResourceInfo resourceInfo;
     [SerializeField] private ProgressBar progressBar;
+    [SerializeField] private bool destroyWhenInteractive;
 
     private Container container;
     private PlayerMovement playerMovement;
@@ -17,7 +18,7 @@ public class Resource : AInteractive
         {
             base.ShowInteractive();
 
-            if (currentProgress != 0)
+            if (currentProgress != 0 && progressBar)
                 progressBar.gameObject.SetActive(true);
         }
     }
@@ -25,7 +26,9 @@ public class Resource : AInteractive
     public override void HideInteractive()
     {
         base.HideInteractive();
-        progressBar.gameObject.SetActive(false);
+
+        if (progressBar)
+            progressBar.gameObject.SetActive(false);
     }
 
     public override void Interactive()
@@ -33,7 +36,15 @@ public class Resource : AInteractive
         if (!playerMovement.IsMiningResoures)
         {
             base.Interactive();
-            StartCoroutine(StartMineResource());
+
+            if (resourceInfo.MiningProgress != 0)
+            {
+                StartCoroutine(StartMineResource());
+            }
+            else
+            {
+                EndMineResource();
+            }
         }
     }
 
@@ -43,7 +54,9 @@ public class Resource : AInteractive
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
         container = new Container(resourceInfo.ItemsBeforeMining);
         container.FillContainer();
-        progressBar.ChangeMaxValue(resourceInfo.MiningProgress);
+
+        if (progressBar)
+            progressBar.ChangeMaxValue(resourceInfo.MiningProgress);
     }
 
     public IEnumerator StartMineResource()
@@ -54,7 +67,9 @@ public class Resource : AInteractive
         {
             yield return new WaitForSeconds(1);
             currentProgress += 10;
-            progressBar.ChangeValue(currentProgress);
+
+            if (progressBar)
+                progressBar.ChangeValue(currentProgress);
 
             if (currentProgress >= resourceInfo.MiningProgress)
             {
@@ -68,6 +83,9 @@ public class Resource : AInteractive
     {
         OpenResourceContainer();
         playerMovement.IsMiningResoures = false;
+
+        if (destroyWhenInteractive)
+            Destroy(gameObject);
     }
 
     private void OpenResourceContainer()

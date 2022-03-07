@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1236907655431881420}
   - component: {fileID: 1236907655431881426}
   - component: {fileID: 1236907655431881427}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ProgressFillRect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1236907657078561539}
   - component: {fileID: 1236907657078561596}
   - component: {fileID: 1236907657078561598}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BarBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 1236907657209811513}
   - component: {fileID: 1236907657209811514}
   - component: {fileID: 1236907657209811515}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1.26}
+  m_AnchoredPosition: {x: 0, y: 1.2600098}
   m_SizeDelta: {x: 2, y: 0.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1236907657209811512
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1236907657209811514
 MonoBehaviour:
   m_ObjectHideFlags: 0
