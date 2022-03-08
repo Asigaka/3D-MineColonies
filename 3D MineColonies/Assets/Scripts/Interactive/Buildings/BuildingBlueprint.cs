@@ -28,7 +28,7 @@ public class BuildingBlueprint : MonoBehaviour
 
         if (playerCamera.GetTouchPosition() != Vector3.zero)
         {
-            transform.position = playerCamera.GetTouchPosition();
+            //transform.position = playerCamera.GetTouchPosition();
         }
 
         choicePanel.gameObject.SetActive(gameState.CurrentState == GameState.BuildMode);
@@ -114,15 +114,15 @@ public class BuildingBlueprint : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (gameState.CurrentState == GameState.BuildMode)
+        if (gameState && gameState.CurrentState == GameState.BuildMode)
         {
             if (CheckCollidersAround())
                 Gizmos.color = Color.green;
             else
                 Gizmos.color = Color.red;
-
-            Gizmos.DrawWireSphere(transform.position, bluePrintRaduis);
         }
+
+        Gizmos.DrawWireSphere(transform.position, bluePrintRaduis);
     }
 
     private void OnBecameInvisible()

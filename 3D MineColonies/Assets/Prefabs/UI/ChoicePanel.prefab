@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5443694287319277458}
   - component: {fileID: 6073776110883543912}
   - component: {fileID: 1736562887108722999}
+  - component: {fileID: 1880773417794191055}
   m_Layer: 5
   m_Name: ChoicePanel
   m_TagString: Untagged
@@ -39,7 +40,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1.789978}
-  m_SizeDelta: {x: 2, y: 1}
+  m_SizeDelta: {x: 2, y: 0.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5443694287319277456
 Canvas:
@@ -127,8 +128,21 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9762012, y: 1, z: 0.1382027}
-  m_Center: {x: 0.022889912, y: 0, z: 0.03979774}
+  m_Size: {x: 0.56, y: 0.55, z: 0.12}
+  m_Center: {x: 0.52, y: 0, z: 0.03979774}
+--- !u!65 &1880773417794191055
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5443694287319277468}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.56, y: 0.55, z: 0.12}
+  m_Center: {x: -0.52, y: 0, z: 0.03979774}
 --- !u!1 &6194946375807198449
 GameObject:
   m_ObjectHideFlags: 0
