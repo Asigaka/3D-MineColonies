@@ -716,6 +716,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildings: []
+  buildingBlueprints: []
+  buildingLayer:
+    serializedVersion: 2
+    m_Bits: 257
   selectedConstructedBuilding: {fileID: 0}
   selectedBlueprintBuilding: {fileID: 0}
 --- !u!1 &705507993

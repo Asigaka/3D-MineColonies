@@ -15,11 +15,17 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private bool rotate;
     [SerializeField] private LayerMask groundLayer;
 
+    private BuildingsManager buildingsManager;
     private Vector3 velocity;
 
     private void Awake()
     {
         playerCamera = Camera.main;
+    }
+
+    private void Start()
+    {
+        buildingsManager = BuildingsManager.Instance;
     }
 
     private void LateUpdate()
@@ -68,41 +74,44 @@ public class PlayerCamera : MonoBehaviour
 
     private void RTSCamera()
     {
-        if (Input.touchCount >= 1)
+        if (buildingsManager.SelectedBlueprint == null)
         {
-            plane.SetNormalAndPosition(transform.up, transform.position);
-        }
-
-        Vector3 delta1 = Vector3.zero;
-        Vector3 delta2 = Vector3.zero;
-
-        if (Input.touchCount >= 1)
-        {
-            delta1 = PlanePositionDelta(Input.GetTouch(0));
-
-            if (Input.GetTouch(0).phase == TouchPhase.Moved)
+            if (Input.touchCount >= 1)
             {
-                playerCamera.transform.Translate(delta1, Space.World);
+                plane.SetNormalAndPosition(transform.up, transform.position);
             }
-        }
 
-        if (Input.touchCount >= 2)
-        {
-            Vector3 pos1 = PlanePosition(Input.GetTouch(0).position);
-            Vector3 pos2 = PlanePosition(Input.GetTouch(1).position);
-            Vector3 pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
-            Vector3 pos2b = PlanePosition(Input.GetTouch(1).position - Input.GetTouch(1).deltaPosition);
+            Vector3 delta1 = Vector3.zero;
+            Vector3 delta2 = Vector3.zero;
 
-            float zoom = Vector3.Distance(pos1, pos2) / Vector3.Distance(pos1b, pos2b);
-            if (zoom == 0 || zoom > 10)
-                return;
-
-            playerCamera.transform.position = Vector3.LerpUnclamped(pos1, playerCamera.transform.position, 1 / zoom);
-
-            if (rotate && pos2b != pos2)
+            if (Input.touchCount >= 1)
             {
-                playerCamera.transform.RotateAround(pos1, plane.normal,
-                   Vector3.SignedAngle(pos2 - pos1, pos2b - pos1b, plane.normal));
+                delta1 = PlanePositionDelta(Input.GetTouch(0));
+
+                if (Input.GetTouch(0).phase == TouchPhase.Moved)
+                {
+                    playerCamera.transform.Translate(delta1, Space.World);
+                }
+            }
+
+            if (Input.touchCount >= 2)
+            {
+                Vector3 pos1 = PlanePosition(Input.GetTouch(0).position);
+                Vector3 pos2 = PlanePosition(Input.GetTouch(1).position);
+                Vector3 pos1b = PlanePosition(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition);
+                Vector3 pos2b = PlanePosition(Input.GetTouch(1).position - Input.GetTouch(1).deltaPosition);
+
+                float zoom = Vector3.Distance(pos1, pos2) / Vector3.Distance(pos1b, pos2b);
+                if (zoom == 0 || zoom > 10)
+                    return;
+
+                playerCamera.transform.position = Vector3.LerpUnclamped(pos1, playerCamera.transform.position, 1 / zoom);
+
+                if (rotate && pos2b != pos2)
+                {
+                    playerCamera.transform.RotateAround(pos1, plane.normal,
+                       Vector3.SignedAngle(pos2 - pos1, pos2b - pos1b, plane.normal));
+                }
             }
         }
     }

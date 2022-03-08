@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Building : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class Building : MonoBehaviour
 {
     [SerializeField] private BuildingInfo buildingInfo;
 
@@ -15,15 +15,5 @@ public class Building : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private void Start()
     {
         manager = BuildingsManager.Instance;
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        manager.SelectConstructedBuilding(this);
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        
     }
 }

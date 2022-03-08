@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-#if UNITY_EDITOR
+#if UNITY_EDITOR 
         float moveHor = Input.GetAxisRaw("Horizontal");
         float moveVer = Input.GetAxisRaw("Vertical");
 #else

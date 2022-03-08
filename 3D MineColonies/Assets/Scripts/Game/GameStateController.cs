@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum GameState { ActionMode, BuildMode, Map}
 public class GameStateController : MonoBehaviour
 {
+    public UnityEvent onGameStateChange;
     private PlayerCamera playerCamera;
-    private GameState currentState;
+    [SerializeField] private GameState currentState;
 
     public static GameStateController Instance;
 
@@ -37,5 +39,8 @@ public class GameStateController : MonoBehaviour
             case GameState.Map:
                 break;
         }
+
+        currentState = state;
+        onGameStateChange.Invoke();
     }
 }

@@ -15,5 +15,5 @@ MonoBehaviour:
   buildingName: 
   buildingDescription: 
   buildingSprite: {fileID: 0}
-  buildingObject: {fileID: 0}
+  buildingObject: {fileID: 7562734131849384806, guid: 0b0685b21da04c346951d090c4e57a34, type: 3}
   buildingBlueprint: {fileID: 1602731388254221896, guid: 73a80964e91bba84da504e3fb4cfce5a, type: 3}
