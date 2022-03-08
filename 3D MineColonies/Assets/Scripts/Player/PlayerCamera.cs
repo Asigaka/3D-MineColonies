@@ -60,13 +60,12 @@ public class PlayerCamera : MonoBehaviour
     {
         if (GameStateController.Instance.CurrentState == GameState.BuildMode)
         {
-            playerCamera.transform.position = rtsOffset;
+            playerCamera.transform.position = rtsOffset + transform.position;
             playerCamera.transform.rotation = Quaternion.Euler(rtsRotation);
             inRTSMode = true;
         }
         else if (GameStateController.Instance.CurrentState == GameState.ActionMode)
         {
-            playerCamera.transform.position = actionOffset;
             playerCamera.transform.rotation = Quaternion.Euler(actionRotation);
             inRTSMode = false;
         }
@@ -143,7 +142,7 @@ public class PlayerCamera : MonoBehaviour
     private void CharacterCamera()
     {
         Vector3 targetPos = transform.position + actionOffset;
-        Vector3 smoothPos = Vector3.Lerp(playerCamera.transform.position, targetPos, smoothFactor * Time.fixedDeltaTime);
+        //Vector3 smoothPos = Vector3.Lerp(playerCamera.transform.position, targetPos, smoothFactor * Time.fixedDeltaTime);
         playerCamera.transform.position = targetPos;
     }
 }

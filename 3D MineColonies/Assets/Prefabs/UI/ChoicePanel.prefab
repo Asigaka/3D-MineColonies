@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5443694287319277457}
   - component: {fileID: 5443694287319277458}
   - component: {fileID: 6073776110883543912}
+  - component: {fileID: 1736562887108722999}
   m_Layer: 5
   m_Name: ChoicePanel
   m_TagString: Untagged
@@ -115,6 +116,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agreeBtn: {fileID: 6194946376828972588}
   disagreeBtn: {fileID: 6194946377473088815}
+--- !u!65 &1736562887108722999
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5443694287319277468}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9762012, y: 1, z: 0.1382027}
+  m_Center: {x: 0.022889912, y: 0, z: 0.03979774}
 --- !u!1 &6194946375807198449
 GameObject:
   m_ObjectHideFlags: 0
