@@ -133,6 +133,7 @@ public class BuildingBlueprint : MonoBehaviour
 
     private void OnGameStateChange()
     {
-        choicePanel.gameObject.SetActive(gameState.CurrentState == GameState.BuildMode);
+        //choicePanel.gameObject.SetActive(gameState.CurrentState == GameState.BuildMode);
+        gameObject.SetActive(gameState.CurrentState == GameState.BuildMode);
     }
 }

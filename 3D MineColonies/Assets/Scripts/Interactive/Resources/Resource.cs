@@ -52,7 +52,7 @@ public class Resource : AInteractive
     {
         base.Initialize();
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-        container = new Container(resourceInfo.ItemsBeforeMining);
+        container = new Container(resourceInfo.ItemsBeforeMining, -1);
         container.FillContainer();
 
         if (progressBar)

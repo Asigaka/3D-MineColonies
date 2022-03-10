@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ItemLocation { InInventory, InContainer}
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private List<ItemEntity> itemsInInventory;
@@ -9,6 +10,16 @@ public class PlayerInventory : MonoBehaviour
     private UIInventoryManager uiInventory;
 
     public List<ItemEntity> ItemsInInventory { get => itemsInInventory; private set => itemsInInventory = value; }
+
+    public static PlayerInventory Instance;
+
+    private void Awake()
+    {
+        if (Instance)
+            Destroy(Instance);
+
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -19,6 +30,7 @@ public class PlayerInventory : MonoBehaviour
     public void AddItem(ItemEntity item)
     {
         ItemEntity newItem = item;
+        newItem.ItemLocation = ItemLocation.InInventory;
 
         if (ItemsInInventory.Contains(GetItemByInfo(newItem.ItemInfo)))
         {
@@ -30,6 +42,7 @@ public class PlayerInventory : MonoBehaviour
         {
             ItemsInInventory.Add(newItem);
             newItem.SetSlot(uiInventory.GetNearestFreeSlot());
+            newItem.ItemSlot.SetItem(newItem);
         }
     }
 
@@ -41,16 +54,23 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void RemoveItem(ItemEntity item, int amount = -1)
+    public void RemoveItem(ItemEntity item)
     {
         ItemEntity removedItem = GetItemFromList(item);
-        if (amount == -1)
-            ItemsInInventory.Remove(removedItem);
+        removedItem.ItemSlot.ClearSlot();
+        ItemsInInventory.Remove(removedItem);
+    }
 
-            removedItem.Count -= amount;
+    public void RemoveItem(ItemEntity item, int amount)
+    {
+        ItemEntity removedItem = GetItemFromList(item);
+        removedItem.Count -= amount;
 
         if (removedItem.Count <= 0)
+        {
+            removedItem.ItemSlot.ClearSlot();
             ItemsInInventory.Remove(removedItem);
+        }
     }
 
     public ItemEntity GetItemFromList(ItemEntity item)

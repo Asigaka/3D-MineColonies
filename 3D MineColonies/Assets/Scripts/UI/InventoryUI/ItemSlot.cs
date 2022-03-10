@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class ItemSlot : MonoBehaviour
 {
     [SerializeField] private Image slotImage;
     [SerializeField] private TextMeshProUGUI slotCount;
@@ -35,13 +35,8 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         slotCount.text = "";
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnClick()
     {
-
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-
+        UIInventoryManager.Instance.FillSelectedItem(itemInSlot);
     }
 }
