@@ -1475,7 +1475,6 @@ MonoBehaviour:
   inventoryContent: {fileID: 573158117}
   maxSlotsInInventory: 16
   itemSlot: {fileID: 5446070564402854366, guid: 43fc9f299cf84284d81e9a3a0c33cd8f, type: 3}
-  slots: []
   backBtn: {fileID: 1408467283}
   containerBG: {fileID: 160037668}
   containerContent: {fileID: 730096624}
@@ -1485,7 +1484,6 @@ MonoBehaviour:
   selectedItem:
     itemInfo: {fileID: 0}
     count: 0
-    itemSlot: {fileID: 0}
     itemLocation: 0
 --- !u!114 &854523844
 MonoBehaviour:
@@ -2811,9 +2809,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 854523842}
-        m_TargetAssemblyTypeName: UIHUDManager, Assembly-CSharp
-        m_MethodName: OnInventoryClick
+      - m_Target: {fileID: 854523843}
+        m_TargetAssemblyTypeName: UIInventoryManager, Assembly-CSharp
+        m_MethodName: UpdateInventory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -21,7 +21,7 @@ public class ContainersManager : MonoBehaviour
     public void OpenContainer(Container container)
     {
         selectedContainer = container;
-        UIInventoryManager.Instance.OpenContainer();
+        UIInventoryManager.Instance.OpenContainer(selectedContainer);
     }
 
     public void CloseContainer()
@@ -38,12 +38,10 @@ public class ContainersManager : MonoBehaviour
         {
             ItemEntity itemInInventory = GetItemByInfo(newItem.ItemInfo);
             itemInInventory.Count += newItem.Count;
-            itemInInventory.ItemSlot.UpdateSlot();
         }
         else
         {
             selectedContainer.ItemsInContainer.Add(newItem);
-            //newItem.SetSlot(uiInventory.GetNearestFreeSlot());
         }
     }
 
@@ -58,7 +56,6 @@ public class ContainersManager : MonoBehaviour
     public void RemoveItem(ItemEntity item)
     {
         ItemEntity removedItem = GetItemFromList(item);
-        //removedItem.ItemSlot.ClearSlot();
         selectedContainer.ItemsInContainer.Remove(removedItem);
     }
 
@@ -69,7 +66,6 @@ public class ContainersManager : MonoBehaviour
 
         if (removedItem.Count <= 0)
         {
-            removedItem.ItemSlot.ClearSlot();
             selectedContainer.ItemsInContainer.Remove(removedItem);
         }
     }

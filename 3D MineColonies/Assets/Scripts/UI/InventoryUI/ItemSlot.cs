@@ -24,8 +24,11 @@ public class ItemSlot : MonoBehaviour
 
     public void UpdateSlot()
     {
-        slotImage.sprite = itemInSlot.ItemInfo.ItemSprite;
-        slotCount.text = itemInSlot.Count.ToString();
+        if (itemInSlot != null)
+        {
+            slotImage.sprite = itemInSlot.ItemInfo.ItemSprite;
+            slotCount.text = itemInSlot.Count.ToString();
+        }
     }
 
     public void ClearSlot()

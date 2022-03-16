@@ -6,10 +6,12 @@ public enum ItemLocation { InInventory, InContainer}
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private List<ItemEntity> itemsInInventory;
+    [SerializeField] private int maxSlots = 16;
 
     private UIInventoryManager uiInventory;
 
     public List<ItemEntity> ItemsInInventory { get => itemsInInventory; private set => itemsInInventory = value; }
+    public bool IsFull() => (itemsInInventory.Count >= maxSlots);
 
     public static PlayerInventory Instance;
 
@@ -36,14 +38,13 @@ public class PlayerInventory : MonoBehaviour
         {
             ItemEntity itemInInventory = GetItemByInfo(newItem.ItemInfo);
             itemInInventory.Count += newItem.Count;
-            itemInInventory.ItemSlot.UpdateSlot();
         }
         else
         {
             ItemsInInventory.Add(newItem);
-            newItem.SetSlot(uiInventory.GetNearestFreeSlot());
-            newItem.ItemSlot.SetItem(newItem);
         }
+
+        uiInventory.UpdateInventory();
     }
 
     public void AddItemList(List<ItemEntity> items)
@@ -57,7 +58,6 @@ public class PlayerInventory : MonoBehaviour
     public void RemoveItem(ItemEntity item)
     {
         ItemEntity removedItem = GetItemFromList(item);
-        removedItem.ItemSlot.ClearSlot();
         ItemsInInventory.Remove(removedItem);
     }
 
@@ -68,7 +68,6 @@ public class PlayerInventory : MonoBehaviour
 
         if (removedItem.Count <= 0)
         {
-            removedItem.ItemSlot.ClearSlot();
             ItemsInInventory.Remove(removedItem);
         }
     }

@@ -9,7 +9,6 @@ public class UIInventoryManager : MonoBehaviour
     [SerializeField] private Transform inventoryContent;
     [SerializeField] private int maxSlotsInInventory;
     [SerializeField] private GameObject itemSlot;
-    [SerializeField] private List<ItemSlot> slots;
     [SerializeField] private Button backBtn;
 
     [Space(5)]
@@ -22,8 +21,9 @@ public class UIInventoryManager : MonoBehaviour
     [SerializeField] private Button takeBtn;
     [SerializeField] private ItemEntity selectedItem;
 
-    private PlayerInventory playerInventory;
     private ContainersManager containersManager;
+    private PlayerInventory playerInventory;
+    private Container selectedContainer;
 
     public static UIInventoryManager Instance;
 
@@ -41,44 +41,51 @@ public class UIInventoryManager : MonoBehaviour
         takeBtn.onClick.AddListener(OnTakeBtnClock);
         CloseContainer();
         ClearSelectedItem();
-        containersManager = ContainersManager.Instance;
         playerInventory = PlayerInventory.Instance;
+        containersManager = ContainersManager.Instance;
+    }
+
+    public void UpdateInventory()
+    {
+        ClearInventory();
+        SpawnInventory();
+    }
+
+    private void ClearInventory()
+    {
+        for (int i = 0; i < inventoryContent.childCount; i++)
+            Destroy(inventoryContent.GetChild(i).gameObject);
     }
 
     private void CloseInventory()
     {
         UIManager.Instance.Toogle(UIType.HUD);
         CloseContainer();
-        containersManager.CloseContainer();
+        selectedContainer = null;
         ClearSelectedItem();
     }
 
     public void SpawnInventory()
     {
+        List<ItemSlot> slotsList = new List<ItemSlot>();
+
         for (int i = 0; i < maxSlotsInInventory; i++)
         {
             ItemSlot newSlot = Instantiate(itemSlot, inventoryContent).GetComponent<ItemSlot>();
+            newSlot.gameObject.name = "Slot" + i;
             newSlot.ClearSlot();
-            slots.Add(newSlot);
+            slotsList.Add(newSlot);
         }
-    }
 
-    public ItemSlot GetNearestFreeSlot()
-    {
-        foreach (ItemSlot slot in slots)
+        for (int i = 0; i < playerInventory.ItemsInInventory.Count; i++)
         {
-            if (slot.ItemInSlot == null)
-            {
-                return slot;
-            }
+            slotsList[i].SetItem(playerInventory.ItemsInInventory[i]);
         }
-
-        Debug.Log("Invetory is full!");
-        return null;
     }
 
-    public void OpenContainer()
+    public void OpenContainer(Container container)
     {
+        selectedContainer = container;
         UpdateContainer();
         containerBG.SetActive(true);
         UIManager.Instance.Toogle(UIType.Inventory);
@@ -104,41 +111,41 @@ public class UIInventoryManager : MonoBehaviour
 
     private void SpawnContainer()
     {
-        Container conatiner = containersManager.SelectedContainer;
         List<ItemSlot> containerSlots = new List<ItemSlot>();
 
-        for (int i = 0; i < conatiner.MaxSlots; i++)
+        for (int i = 0; i < selectedContainer.MaxSlots; i++)
         {
             ItemSlot slot = Instantiate(itemSlot, containerContent).GetComponent<ItemSlot>();
             slot.ClearSlot();
             containerSlots.Add(slot);
         }
 
-        for (int j = 0; j < conatiner.ItemsInContainer.Count; j++)
+        for (int j = 0; j < selectedContainer.ItemsInContainer.Count; j++)
         {
-            containerSlots[j].SetItem(conatiner.ItemsInContainer[j]);
+            containerSlots[j].SetItem(selectedContainer.ItemsInContainer[j]);
         }
     }
 
     private void OnTakeBtnClock()
     {
-        if (selectedItem.ItemLocation == ItemLocation.InInventory)
+        if (selectedItem.ItemLocation == ItemLocation.InInventory && !containersManager.SelectedContainer.IsFull())
         {
             containersManager.AddItem(selectedItem);
             playerInventory.RemoveItem(selectedItem);
         }
-        else
+        else if (selectedItem.ItemLocation == ItemLocation.InContainer && !playerInventory.IsFull())
         {
             playerInventory.AddItem(selectedItem);
             containersManager.RemoveItem(selectedItem);
         }
         ClearSelectedItem();
         UpdateContainer();
+        UpdateInventory();
     }
 
     public void FillSelectedItem(ItemEntity item)
     {
-        takeBtn.gameObject.SetActive(containersManager.SelectedContainer != null);
+        takeBtn.gameObject.SetActive(selectedContainer != null);
 
         if (item != null)
         {

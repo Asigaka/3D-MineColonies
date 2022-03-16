@@ -16,6 +16,7 @@ public class Container
     public int MaxSlots { get => maxSlots; }
 
     public bool IsEmpty() => !(itemsInContainer.Count > 0);
+    public bool IsFull() => (itemsInContainer.Count >= maxSlots);
 
     public Container(int maxSlots)
     {
