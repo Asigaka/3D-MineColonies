@@ -9,7 +9,6 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] private Vector3 rtsOffset;
     [SerializeField] private Vector3 actionRotation;
     [SerializeField] private Vector3 rtsRotation;
-    [SerializeField] private float smoothFactor = 0.5f;
     [SerializeField] private Plane plane;
     [SerializeField] private bool inRTSMode;
     [SerializeField] private bool rotate;

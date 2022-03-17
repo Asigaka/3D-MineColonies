@@ -10,6 +10,8 @@ public class ContainerHandler : AInteractive
 
     private PlayerInventory playerInventory;
 
+    public Container Container { get => container; }
+
     public override void Initialize()
     {
         base.Initialize();

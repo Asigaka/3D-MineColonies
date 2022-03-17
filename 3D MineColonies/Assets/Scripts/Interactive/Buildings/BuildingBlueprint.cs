@@ -26,11 +26,6 @@ public class BuildingBlueprint : MonoBehaviour
         choicePanel.AgreeBtn.onClick.AddListener(AgreeBlueprint);
         choicePanel.DisagreeBtn.onClick.AddListener(DisagreeBlueprint);
 
-        if (playerCamera.GetTouchPosition() != Vector3.zero)
-        {
-            //transform.position = playerCamera.GetTouchPosition();
-        }
-
         choicePanel.gameObject.SetActive(gameState.CurrentState == GameState.BuildMode);
         gameState.onGameStateChange.AddListener(OnGameStateChange);
     }

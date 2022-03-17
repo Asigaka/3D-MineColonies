@@ -17,3 +17,8 @@ MonoBehaviour:
   buildingSprite: {fileID: 0}
   buildingObject: {fileID: 5729069097510971631, guid: f2392e7b34aefc1488887ffeaab7a6fc, type: 3}
   buildingBlueprint: {fileID: 5727268270898846947, guid: 9a0d38411d897f841aa808a6cb3b923f, type: 3}
+  productItems:
+  - itemInfo: {fileID: 11400000, guid: eed61608e82be774c8a40357b3bb740e, type: 2}
+    minAmount: 2
+    maxAmount: 5
+  progressGainMultiplier: 10

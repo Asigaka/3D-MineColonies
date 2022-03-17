@@ -45,6 +45,22 @@ public class ContainersManager : MonoBehaviour
         }
     }
 
+    public void AddItem(ItemEntity item, Container container)
+    {
+        ItemEntity newItem = item;
+        newItem.ItemLocation = ItemLocation.InContainer;
+
+        if (container.ItemsInContainer.Contains(GetItemByInfo(newItem.ItemInfo)))
+        {
+            ItemEntity itemInInventory = GetItemByInfo(newItem.ItemInfo);
+            itemInInventory.Count += newItem.Count;
+        }
+        else
+        {
+            container.ItemsInContainer.Add(newItem);
+        }
+    }
+
     public void AddItemList(List<ItemEntity> items)
     {
         foreach (ItemEntity addedItem in items)

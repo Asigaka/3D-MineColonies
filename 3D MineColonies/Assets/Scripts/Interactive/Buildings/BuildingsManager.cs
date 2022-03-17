@@ -9,7 +9,7 @@ public class BuildingsManager : MonoBehaviour
     [SerializeField] private LayerMask buildingLayer;
 
     [SerializeField] private Building selectedBuilding;
-    [SerializeField] private BuildingBlueprint selectedBlueprint;
+    private BuildingBlueprint selectedBlueprint;
     private PlayerCamera playerCamera;
 
     public static BuildingsManager Instance;
@@ -41,7 +41,8 @@ public class BuildingsManager : MonoBehaviour
 
     public void SpawnBlueprint(BuildingInfo buildingInfo)
     {
-        selectedBlueprint = Instantiate(buildingInfo.BuildingBlueprint.gameObject).GetComponent<BuildingBlueprint>();
+        selectedBlueprint = Instantiate(buildingInfo.BuildingBlueprint.gameObject, playerCamera.transform.position, Quaternion.identity).GetComponent<BuildingBlueprint>();
+        selectedBlueprint.transform.position = new Vector3(selectedBlueprint.transform.position.x, 0 , selectedBlueprint.transform.position.z);
         buildingBlueprints.Add(selectedBlueprint);
     }
 
@@ -56,11 +57,24 @@ public class BuildingsManager : MonoBehaviour
         selectedBlueprint = blueprint;
     }
 
+    public void SelectBuilding(Building building)
+    {
+        selectedBuilding = building;
+    }
+
     public void ClearBlueprint(BuildingBlueprint blueprint)
     {
         if (blueprint == selectedBlueprint)
         {
             selectedBlueprint = null;
+        }
+    }
+
+    public void ClearBuilding(Building building)
+    {
+        if (building == selectedBuilding)
+        {
+            selectedBuilding = null;
         }
     }
 }

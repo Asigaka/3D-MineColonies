@@ -6,9 +6,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Outline))]
 public abstract class AInteractive : MonoBehaviour
 {
-    private UnityEvent onAfterStart;
-
     private Outline outline;
+    private bool initialized;
 
     private void Start()
     {
@@ -23,13 +22,16 @@ public abstract class AInteractive : MonoBehaviour
 
     public virtual void Initialize()
     {
-
+        initialized = true;
     }
 
     public virtual void ShowInteractive()
     {
-        outline.enabled = true;
-        UIHUDManager.Instance.InteractiveBtnActive(true);
+        if (initialized)
+        {
+            outline.enabled = true;
+            UIHUDManager.Instance.InteractiveBtnActive(true);
+        }
     }
 
     public virtual void HideInteractive()
